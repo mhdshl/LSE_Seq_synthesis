@@ -34,21 +34,11 @@ from keras.callbacks import ModelCheckpoint
 from random import sample
 from imblearn.over_sampling import SMOTE
 
-"""#CKSAAP Features
-
-### Use the command like this (use github location with wget)
-data_path = '/content/drive/MyDrive/ACP_Seq2Seq/Datasets/acp740.txt'
-
-[DataX, LabelY] = Convert_Seq2CKSAAP(prepare_feature_for_CKSAAP(data_path), gap=8)
-"""
-
-# file_path = tensorflow.keras.utils.get_file('ACP_seq2seq_out_2024-05-15.txt', 'https://raw.githubusercontent.com/mhdshl/ACP_Seq2Seq/main/Data/ACP_seq2seq_out_2024-05-15.txt')
 
 def prepare_feature_for_CKSAAP(file_path):
-    name = file_path.split('https://raw.githubusercontent.com/mhdshl/LSE-Seq-synthesis/main/Data/')[1]
+    name = file_path.split('https://raw.githubusercontent.com/mhdshl/LSE-Seq-synthesis/main/data/')[1]
     data_path = tensorflow.keras.utils.get_file(name, file_path)
 
-    # path = r"acp740.txt"
     new_list=[]
     seq_list=[]
     label = []
@@ -140,23 +130,6 @@ def CKSAAP(fastas, gap=5, **kw):
         encodings.append(code)
     return encodings
 
-"""# Features for MHCNN
-
-## use this to read from github source
-
-path_to_file = tf.keras.utils.get_file('untrained_gen_ACP.txt', 'https://raw.githubusercontent.com/mhdshl/ACP_Seq2Seq/main/Data/untrained_gen_ACP.txt')
-
-## and use these to generate features for MHCNN
-
-X1test = numeric(dBPF) --- BPF features
-
-X2test = numeric(dBIT) --- dBIT features
-
-X3test = numeric(dBLOSUM) --- dBLOSUM features
-
-
-
-"""
 
 paddingLength = 25
 def check(seq):
@@ -176,7 +149,7 @@ def readFASTAs(fileName):
     :param fileName:
     :return: genome sequences
     '''
-    name = fileName.split('https://raw.githubusercontent.com/mhdshl/LSE-Seq-synthesis/main/Data/')[1]
+    name = fileName.split('https://raw.githubusercontent.com/mhdshl/LSE-Seq-synthesis/main/data/')[1]
     data_path = tensorflow.keras.utils.get_file(name, fileName)
     with open(data_path, 'r') as file:
         v = []
@@ -191,15 +164,8 @@ def readFASTAs(fileName):
         v.append(genome.upper())
         del v[0]
         return v
-    #end-with
-#end-def
-
-# path_to_file = tf.keras.utils.get_file('untrained_gen_ACP.txt', 'https://raw.githubusercontent.com/mhdshl/ACP_Seq2Seq/main/Data/untrained_gen_ACP.txt')
-# Sequences = readFASTAs(path_to_file)
 
 def ensure(file_path):
-  # name = file_path.split('https://raw.githubusercontent.com/mhdshl/ACP_Seq2Seq/main/Data/')[1]
-  # data_path = tensorflow.keras.utils.get_file(name, file_path)
   Sequences = readFASTAs(file_path)
   for seq in Sequences:
       if check(seq) == False:
@@ -208,11 +174,6 @@ def ensure(file_path):
   #end-for
   return True
 #end-def
-
-
-# assert ensure(file_path) == True # It won't work, if the bad character found.
-
-# Protein/Peptide One-Zero Encoding
 
 dBPF = {
     'A':[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -312,12 +273,6 @@ def numeric(d, file_path):
     return X
 #end-def
 
-"""# Features for the paper ACP-DL
-
-## use the following for feature extraction
-
-bpf, kmer, label = prepare_feature_ACP-DL(filepath)
-"""
 
 def TransDict_from_list(groups):
     transDict = dict()
@@ -400,7 +355,7 @@ def prepare_feature_ACP_DL(file_path):
     RNA_seq_dict = {}
     protein_seq_dict = {}
     protein_index = 0
-    name = file_path.split('https://raw.githubusercontent.com/mhdshl/LSE-Seq-synthesis/main/Data/')[1]
+    name = file_path.split('https://raw.githubusercontent.com/mhdshl/LSE-Seq-synthesis/main/data/')[1]
     data_path = tensorflow.keras.utils.get_file(name, file_path)
     with open(data_path, 'r') as fp:
         for line in fp:
@@ -488,46 +443,3 @@ def BPF(seq_temp):
             tem_vec = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]
         fea = fea + tem_vec
     return fea
-
-# def prepare_feature():
-#     label = []
-#     interaction_pair = {}
-#     RNA_seq_dict = {}
-#     protein_seq_dict = {}
-#     protein_index = 1
-#     with open('acp740.txt', 'r') as fp:
-#         for line in fp:
-#             if line[0] == '>':
-#                 values = line[1:].strip().split('|')
-#                 label_temp = values[1]
-#                 protein = values[0]
-#                 if label_temp == '1':
-#                     label.append(1)
-#                 else:
-#                     label.append(0)
-#             else:
-#                 seq = line[:-1]
-#                 protein_seq_dict[protein_index] = seq
-#                 protein_index = protein_index + 1
-#     # name_list = read_name_from_lncRNA_fasta('ncRNA-protein/lncRNA_RNA.fa')
-#     groups = ['AGV', 'ILFP', 'YMTS', 'HNQW', 'RK', 'DE', 'C']
-#     group_dict = TransDict_from_list(groups)
-#     protein_tris = get_3_protein_trids()
-
-#     # tris3 = get_3_trids()
-#     train = []
-#     # get protein feature
-#     # pdb.set_trace()
-#     for i in protein_seq_dict:  # and protein_fea_dict.has_key(protein) and RNA_fea_dict.has_key(RNA):
-
-#         protein_seq = translate_sequence(protein_seq_dict[i], group_dict)
-#         # bpf_feature = BPF(protein_seq_dict[i])
-#         # pdb.set_trace()
-#         # RNA_tri_fea = get_4_nucleotide_composition(tris, RNA_seq, pythoncount=False)
-#         protein_tri_fea = get_4_nucleotide_composition(protein_tris, protein_seq, pythoncount =False)
-
-#         train.append(protein_tri_fea)
-#         protein_index = protein_index + 1
-#         # chem_fea.append(chem_tmp_fea)
-
-#     return np.array(train), label
