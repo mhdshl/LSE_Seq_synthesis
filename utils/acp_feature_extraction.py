@@ -45,7 +45,7 @@ data_path = '/content/drive/MyDrive/ACP_Seq2Seq/Datasets/acp740.txt'
 # file_path = tensorflow.keras.utils.get_file('ACP_seq2seq_out_2024-05-15.txt', 'https://raw.githubusercontent.com/mhdshl/ACP_Seq2Seq/main/Data/ACP_seq2seq_out_2024-05-15.txt')
 
 def prepare_feature_for_CKSAAP(file_path):
-    name = file_path.split('https://raw.githubusercontent.com/mhdshl/ACP_Seq2Seq/main/Data/')[1]
+    name = file_path.split('https://raw.githubusercontent.com/mhdshl/LSE-Seq-synthesis/main/Data/')[1]
     data_path = tensorflow.keras.utils.get_file(name, file_path)
 
     # path = r"acp740.txt"
@@ -176,7 +176,7 @@ def readFASTAs(fileName):
     :param fileName:
     :return: genome sequences
     '''
-    name = fileName.split('https://raw.githubusercontent.com/mhdshl/ACP_Seq2Seq/main/Data/')[1]
+    name = fileName.split('https://raw.githubusercontent.com/mhdshl/LSE-Seq-synthesis/main/Data/')[1]
     data_path = tensorflow.keras.utils.get_file(name, fileName)
     with open(data_path, 'r') as file:
         v = []
@@ -400,7 +400,7 @@ def prepare_feature_ACP_DL(file_path):
     RNA_seq_dict = {}
     protein_seq_dict = {}
     protein_index = 0
-    name = file_path.split('https://raw.githubusercontent.com/mhdshl/ACP_Seq2Seq/main/Data/')[1]
+    name = file_path.split('https://raw.githubusercontent.com/mhdshl/LSE-Seq-synthesis/main/Data/')[1]
     data_path = tensorflow.keras.utils.get_file(name, file_path)
     with open(data_path, 'r') as fp:
         for line in fp:
