@@ -1,1 +1,1 @@
-# ACP Sequence Synthesis and Analysis using Latent-Space Encoding
+# ACP Sequence Synthesis and Analysis based on Latent-Space Encoding using SinkHorn AutoEncoder
